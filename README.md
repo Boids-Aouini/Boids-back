@@ -24,7 +24,7 @@ Here is the folder structure
 ├───index.js
 ```
 
-# Usage 
+# Run local copy 
 
 ```bash
     npm run server # this will run server and restart automatically when ever there is changes
