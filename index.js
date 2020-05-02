@@ -3,6 +3,8 @@ let app = express();
 let bodyParser = require('body-parser');
 let cors = require('cors');
 
+let con = require('./db/connectToDB/connectToDB');
+
 app.use(cors());
 
 app.use(bodyParser.json())

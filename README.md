@@ -1,6 +1,6 @@
 # Boids-back
 
-Boids-back is for (m-amine-aouini)[https://github.com/m-amine-aouini] thesis project in RBK Tunisia
+Boids-back is for [m-amine-aouini](https://github.com/m-amine-aouini) thesis project in RBK Tunisia
 
 # Setup
 
@@ -18,7 +18,7 @@ Boids-back is for (m-amine-aouini)[https://github.com/m-amine-aouini] thesis pro
 
 Amine M. Aouini
 
-(GitHub)[https://github.com/m-amine-aouini]
+[GitHub](https://github.com/m-amine-aouini)
 
-(Twitter)[https://twitter.com/amine_m_aouini]
+[Twitter](https://twitter.com/amine_m_aouini)
 
