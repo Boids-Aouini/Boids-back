@@ -2,10 +2,26 @@
 
 Boids-back is for [m-amine-aouini](https://github.com/m-amine-aouini) thesis project in RBK Tunisia
 
-# Setup
+# Installing Node Modules
 
 ```bash
     npm install
+```
+# What's included
+
+Here is the folder structure
+
+```text
+
+├───db
+|   |────connectToDB
+|   |   |────connectToDB.js
+|   |   |────README.md
+|   |────setupBoidsDB
+|       |────Boids.database.sql
+|
+├───routes
+├───index.js
 ```
 
 # Usage 
