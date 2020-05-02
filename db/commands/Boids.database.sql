@@ -52,6 +52,7 @@ CREATE TABLE Channels_Posts (
 CREATE TABLE Posts_Comments (
     id int NOT NULL UNIQUE AUTO_INCREMENT,
     user_id int NOT NULL,
+    post_id int NOT NULL,
     post int NOT NULL,
     comment varchar(250),
     createdAt DATE,
