@@ -11,7 +11,7 @@ app.use(cors());
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-require('./routes/authRoutes')(app);
+require('./routes/authRoutes')(app, Con);
 
 let PORT = process.env.PORT = 4404;
 
