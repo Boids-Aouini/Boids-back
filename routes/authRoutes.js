@@ -34,6 +34,9 @@ module.exports = (app, Con) => {
         await Con.query("SELECT email, password FROM Users WHERE email = (?)", [email], (err, result) => {
             if (err) { throw err }
             else {
+                let encryptedPass = result[0].password;
+                var bytes = CryptoJS.AES.decrypt(encryptedPass, process.env.PASSWORD_SECRET_KEY);
+                var decryptedPass = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
                 console.log(result)
             }
         })
