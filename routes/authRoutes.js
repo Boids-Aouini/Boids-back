@@ -1,4 +1,5 @@
 let CryptoJS = require('crypto-js');
+let jwt = require('jsonwebtoken');
 
 module.exports = (app, Con) => {
     app.post('/register', async (req, response) => {
@@ -12,11 +13,16 @@ module.exports = (app, Con) => {
             heighAccuracy, createdAt];
 
         await Con.query(`INSERT INTO Users (firstname, lastname, email, password, birthDate, longitude, latitude, heighAccuracy, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`, newAcc,
-            (err, result, fields) => {
-                if (err) { response.staus(401).send('email is already used') }
+            (err, result) => {
+                if (err) { response.status(401).send('email is already used') }
                 else {
 
-                    console.log(result.insertId)
+                    let token = jwt.sign({ id: result.insertId }, process.env.TOKEN_SECRET_KEY);
+                    response.status(201).send({
+                        results: {
+                            token
+                        }
+                    })
                 }
 
             })
