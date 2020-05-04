@@ -27,4 +27,16 @@ module.exports = (app, Con) => {
 
             })
     })
+
+    app.post('/login', async (req, res) => {
+        let { email, password } = req.body;
+
+        await Con.query("SELECT email, password FROM Users WHERE email = " + email, (err, result) => {
+            if (err) { throw err }
+            else {
+                console.log(result)
+            }
+        })
+
+    })
 }
