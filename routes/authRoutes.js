@@ -31,12 +31,15 @@ module.exports = (app, Con) => {
     app.post('/login', async (req, res) => {
         let { email, password } = req.body;
 
-        await Con.query("SELECT email, password FROM Users WHERE email = (?)", [email], (err, result) => {
+        await Con.query("SELECT id, password FROM Users WHERE email = (?)", [email], (err, result) => {
             if (err) { throw err }
             else {
                 let encryptedPass = result[0].password;
                 var bytes = CryptoJS.AES.decrypt(encryptedPass, process.env.PASSWORD_SECRET_KEY);
                 var decryptedPass = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+                if (password === decryptedPass) {
+
+                }
                 console.log(result)
             }
         })
