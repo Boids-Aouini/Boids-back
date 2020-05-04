@@ -34,11 +34,22 @@ module.exports = (app, Con) => {
         await Con.query("SELECT id, password FROM Users WHERE email = (?)", [email], (err, result) => {
             if (err) { throw err }
             else {
-                let encryptedPass = result[0].password;
-                var bytes = CryptoJS.AES.decrypt(encryptedPass, process.env.PASSWORD_SECRET_KEY);
-                var decryptedPass = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-                if (password === decryptedPass) {
 
+                if (!!result[0]) {
+                    let encryptedPass = result[0].password;
+                    var bytes = CryptoJS.AES.decrypt(encryptedPass, process.env.PASSWORD_SECRET_KEY);
+                    var decryptedPass = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+                    if (password === decryptedPass) {
+                        let token = jwt.sign({ id: result[0].id }, process.env.TOKEN_SECRET_KEY);
+                        response.status(201).send({
+                            results: {
+                                token
+                            }
+                        })
+                    }
+
+                } else {
+                    res.status(401).send('email is not found')
                 }
                 console.log(result)
             }
