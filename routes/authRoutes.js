@@ -38,22 +38,22 @@ module.exports = (app, Con) => {
                 if (!!result[0]) {
                     let encryptedPass = result[0].password;
                     let bytes = CryptoJS.AES.decrypt(encryptedPass, process.env.PASSWORD_SECRET_KEY);
-                    let decryptedPass = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+                    let decryptedPass = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)); // decrypt password
+
                     if (password === decryptedPass) {
-                        let token = jwt.sign({ id: result[0].id }, process.env.TOKEN_SECRET_KEY);
-                        response.status(201).send({
+                        let token = jwt.sign({ id: result[0].id }, process.env.TOKEN_SECRET_KEY); // make token if creds is valid
+                        response.status(201).send({ // send response with the token
                             results: {
                                 token
                             }
                         })
                     } else {
-                        res.status(401).send('invalid password')
+                        res.status(401).send('invalid password') // send invalid token in case that it is
                     }
 
                 } else {
-                    res.status(401).send('email is not found')
+                    res.status(401).send('email is not found') // send email not found in case that it is
                 }
-                console.log(result)
             }
         })
 
