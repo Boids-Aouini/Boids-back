@@ -21,6 +21,8 @@ Here is the folder structure
 |       |────Boids.database.sql
 |
 ├───routes
+|   ├─────authRoutes.js
+|
 ├───index.js
 ```
 
