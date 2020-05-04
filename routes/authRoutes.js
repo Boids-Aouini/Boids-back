@@ -37,8 +37,8 @@ module.exports = (app, Con) => {
 
                 if (!!result[0]) {
                     let encryptedPass = result[0].password;
-                    var bytes = CryptoJS.AES.decrypt(encryptedPass, process.env.PASSWORD_SECRET_KEY);
-                    var decryptedPass = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+                    let bytes = CryptoJS.AES.decrypt(encryptedPass, process.env.PASSWORD_SECRET_KEY);
+                    let decryptedPass = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
                     if (password === decryptedPass) {
                         let token = jwt.sign({ id: result[0].id }, process.env.TOKEN_SECRET_KEY);
                         response.status(201).send({
@@ -46,6 +46,8 @@ module.exports = (app, Con) => {
                                 token
                             }
                         })
+                    } else {
+                        res.status(401).send('invalid password')
                     }
 
                 } else {
