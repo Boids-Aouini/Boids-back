@@ -6,19 +6,19 @@ module.exports = (app, Con) => {
         let { firstname, lastname, email,
             password, longitude, latitude,
             heighAccuracy, createdAt, birthDate } = req.body;
-        const cipherPass = CryptoJS.AES.encrypt(password, process.env.PASSWORD_SECRET_KEY).toString();
+        const cipherPass = CryptoJS.AES.encrypt(password, process.env.PASSWORD_SECRET_KEY).toString(); // crypte password
 
         let newAcc = [firstname, lastname, email,
             cipherPass, birthDate, longitude, latitude,
-            heighAccuracy, createdAt];
+            heighAccuracy, createdAt]; // new account data that is going to be stored in the db
 
         await Con.query(`INSERT INTO Users (firstname, lastname, email, password, birthDate, longitude, latitude, heighAccuracy, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`, newAcc,
             (err, result) => {
-                if (err) { response.status(401).send('email is already used') }
+                if (err) { response.status(401).send('email is already used') } // send err in case there is one
                 else {
 
-                    let token = jwt.sign({ id: result.insertId }, process.env.TOKEN_SECRET_KEY);
-                    response.status(201).send({
+                    let token = jwt.sign({ id: result.insertId }, process.env.TOKEN_SECRET_KEY); // make token
+                    response.status(201).send({ // send successful response with token
                         results: {
                             token
                         }
