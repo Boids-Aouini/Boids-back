@@ -32,7 +32,7 @@ module.exports = (app, Con) => {
         let { email, password } = req.body;
 
         await Con.query("SELECT id, password FROM Users WHERE email = (?)", [email], (err, result) => {
-            if (err) { res.status(400).send(err).end() }
+            if (err) { res.status(400).send(err).end() } // send error in case there is one
             else {
 
                 if (!!result[0]) {
