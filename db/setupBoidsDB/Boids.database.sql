@@ -26,6 +26,12 @@ CREATE TABLE Servers (
     FOREIGN KEY (leader_id) REFERENCES Users(id)
 );
 
+CREATE TABLE Servers_Members (
+    id int NOT NULL AUTO_INCREMENT UNIQUE,
+    server_id int NOT NULL,
+    user_id int NOT NULL
+)
+
 CREATE TABLE Channels (
     id int NOT NULL UNIQUE AUTO_INCREMENT,
     server_id int NOT NULL,
