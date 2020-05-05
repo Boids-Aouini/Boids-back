@@ -29,7 +29,10 @@ CREATE TABLE Servers (
 CREATE TABLE Servers_Members (
     id int NOT NULL AUTO_INCREMENT UNIQUE,
     server_id int NOT NULL,
-    user_id int NOT NULL
+    user_id int NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (server_id) REFERENCES (Servers),
+    FOREIGN KEY (user_id) REFERENCES (Users)
 )
 
 CREATE TABLE Channels (
