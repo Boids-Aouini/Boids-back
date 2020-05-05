@@ -26,13 +26,13 @@ CREATE TABLE Servers (
     FOREIGN KEY (leader_id) REFERENCES Users(id)
 );
 
-CREATE TABLE Servers_Members (
+CREATE TABLE Servers_Memberships (
     id int NOT NULL AUTO_INCREMENT UNIQUE,
     server_id int NOT NULL,
     user_id int NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (server_id) REFERENCES (Servers),
-    FOREIGN KEY (user_id) REFERENCES (Users)
+    FOREIGN KEY (server_id) REFERENCES Servers(id),
+    FOREIGN KEY (user_id) REFERENCES Users(id)
 )
 
 CREATE TABLE Channels (
@@ -40,7 +40,6 @@ CREATE TABLE Channels (
     server_id int NOT NULL,
     name varchar(20) NOT NULL,
     createdAt DATE,
-
     PRIMARY KEY (id),
     FOREIGN KEY (server_id) REFERENCES Servers(id)
 );
