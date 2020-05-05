@@ -33,12 +33,12 @@ CREATE TABLE Servers_Memberships (
     PRIMARY KEY (id),
     FOREIGN KEY (server_id) REFERENCES Servers(id),
     FOREIGN KEY (user_id) REFERENCES Users(id)
-)
+);
 
 CREATE TABLE Channels (
-    id int NOT NULL UNIQUE AUTO_INCREMENT,
+    id int NOT NULL AUTO_INCREMENT UNIQUE,
     server_id int NOT NULL,
-    name varchar(20) NOT NULL,
+    name VARCHAR(20),
     createdAt DATE,
     PRIMARY KEY (id),
     FOREIGN KEY (server_id) REFERENCES Servers(id)
