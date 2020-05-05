@@ -20,7 +20,7 @@ CREATE TABLE Users (
 CREATE TABLE Servers (
     id int NOT NULL UNIQUE AUTO_INCREMENT,
     leader_id int NOT NULL,
-    name varchar(50) NOT NULL,
+    name varchar(50) NOT NULL UNIQUE,
     createdAt DATE,
     PRIMARY KEY (id),
     FOREIGN KEY (leader_id) REFERENCES Users(id)
