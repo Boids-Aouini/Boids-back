@@ -12,6 +12,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 require('./routes/authRoutes')(app, Con); // setup authRoutes in the server
+require('./routes/serverRoutes')(app, Con);
 
 let PORT = process.env.PORT = 4404;
 
