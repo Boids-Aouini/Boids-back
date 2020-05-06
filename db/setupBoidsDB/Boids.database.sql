@@ -9,9 +9,6 @@ CREATE TABLE Users (
     email varchar(255) UNIQUE NOT NULL,
     password varchar(255) NOT NULL,
     birthDate Date,
-    longitude int,
-    latitude int,
-    heighAccuracy int,
     updatedAt Date,
     createdAt Date,
     PRIMARY KEY (id)
