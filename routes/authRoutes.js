@@ -28,19 +28,18 @@ module.exports = (app, Con) => {
             })
     })
 
-    app.post('/login', async (req, res) => {
+    app.post('/login', async (req, response) => {
         let { email, password } = req.body;
-
-        await Con.query("SELECT id, password FROM Users WHERE email = (?)", [email], (err, result) => {
+        console.log(req.body)
+        await Con.query("SELECT id, password FROM Users WHERE email = (?)", email, (err, result) => {
             if (err) { res.status(400).send(err).end() } // send error in case there is one
             else {
-
+                // console.log(!!result[0], result)
                 if (!!result[0]) {
                     let encryptedPass = result[0].password;
                     let bytes = CryptoJS.AES.decrypt(encryptedPass, process.env.PASSWORD_SECRET_KEY);
                     let decryptedPass = JSON.parse(bytes.toString(CryptoJS.enc.Utf8)); // decrypt password
-
-                    if (password === decryptedPass) {
+                    if (password + "" === decryptedPass + "") {
                         let token = jwt.sign({ id: result[0].id }, process.env.TOKEN_SECRET_KEY); // make token if creds is valid
                         response.status(201).send({ // send response with the token
                             results: {
