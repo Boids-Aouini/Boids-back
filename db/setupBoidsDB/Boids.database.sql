@@ -9,9 +9,6 @@ CREATE TABLE Users (
     email varchar(255) UNIQUE NOT NULL,
     password varchar(255) NOT NULL,
     birthDate Date,
-    longitude int,
-    latitude int,
-    heighAccuracy int,
     updatedAt Date,
     createdAt Date,
     PRIMARY KEY (id)
@@ -30,6 +27,7 @@ CREATE TABLE Servers_Memberships (
     id int NOT NULL AUTO_INCREMENT UNIQUE,
     server_id int NOT NULL,
     user_id int NOT NULL,
+    role VARCHAR(25) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (server_id) REFERENCES Servers(id),
     FOREIGN KEY (user_id) REFERENCES Users(id)

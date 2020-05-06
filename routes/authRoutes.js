@@ -4,15 +4,13 @@ let jwt = require('jsonwebtoken');
 module.exports = (app, Con) => {
     app.post('/register', async (req, response) => {
         let { firstname, lastname, email,
-            password, longitude, latitude,
-            heighAccuracy, createdAt, birthDate } = req.body;
+            password, createdAt, birthDate } = req.body;
         const cipherPass = CryptoJS.AES.encrypt(password, process.env.PASSWORD_SECRET_KEY).toString(); // crypte password
 
         let newAcc = [firstname, lastname, email,
-            cipherPass, birthDate, longitude, latitude,
-            heighAccuracy, createdAt]; // new account data that is going to be stored in the db
+            cipherPass, birthDate, createdAt]; // new account data that is going to be stored in the db
 
-        await Con.query(`INSERT INTO Users (firstname, lastname, email, password, birthDate, longitude, latitude, heighAccuracy, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`, newAcc,
+        await Con.query(`INSERT INTO Users (firstname, lastname, email, password, birthDate, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`, newAcc,
             (err, result) => {
                 if (err) { response.status(401).send('email is already used') } // send err in case there is one
                 else {
