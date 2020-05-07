@@ -1,4 +1,4 @@
-CREATE DATABASE Boids;
+CREATE DATABASE Test_Boids;
 
 USE Test_Boids;
 
