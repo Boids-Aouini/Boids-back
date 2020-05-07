@@ -15,6 +15,7 @@ module.exports = (app, Con) => {
                 if (err) { response.status(401).send('email is already used') } // send err in case there is one
                 else {
 
+
                     let token = jwt.sign({ id: result.insertId }, process.env.TOKEN_SECRET_KEY); // make token
                     response.status(201).send({ // send successful response with token
                         results: {
@@ -30,7 +31,7 @@ module.exports = (app, Con) => {
         let { email, password } = req.body;
         console.log(req.body)
         await Con.query("SELECT id, password FROM Users WHERE email = (?)", email, (err, result) => {
-            if (err) { res.status(400).send(err).end() } // send error in case there is one
+            if (err) { response.status(400).send(err).end() } // send error in case there is one
             else {
                 // console.log(!!result[0], result)
                 if (!!result[0]) {
@@ -45,11 +46,11 @@ module.exports = (app, Con) => {
                             }
                         })
                     } else {
-                        res.status(401).send('invalid password') // send invalid token in case that it is
+                        response.status(401).send('invalid password') // send invalid token in case that it is
                     }
 
                 } else {
-                    res.status(401).send('email is not found') // send email not found in case that it is
+                    response.status(401).send('email is not found') // send email not found in case that it is
                 }
             }
         })
