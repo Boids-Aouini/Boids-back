@@ -11,9 +11,9 @@ module.exports = (app, Con) => {
             (err, ServerResult) => { // callback once done with query
                 if (err) { res.status(400).send('Server\'s name is used already').end() } // send error in case there is one
                 Con.query('INSERT INTO Channels (server_id, name, createdAt) VALUES', [ServerResult.insertId, 'Announcement', createdAt],
-
+                    // add new channel to new server
                     (err, resultChannel) => {
-                        if (err) { res.status(400).send(err).end() }
+                        if (err) { res.status(400).send(err).end() } // send error in case there is one
                         res.send({ // send successful response
                             results: {
                                 response: "Handeled create new server request",
