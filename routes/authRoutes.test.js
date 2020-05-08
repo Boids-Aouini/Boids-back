@@ -9,7 +9,7 @@ describe('authentication routes testing', () => {
             if (err) {
                 return console.log('error:' + err.message);
             }
-            console.log('Close the database connection.');
+
         });
     })
 
