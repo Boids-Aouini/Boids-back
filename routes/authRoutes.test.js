@@ -5,14 +5,6 @@ let Con = require('../db/connectToDB/connectToDB');
 
 describe('authentication routes testing', () => {
 
-    beforeAll(() => {
-        // Con.connect(function (err) { // connect to db
-        //     if (err) throw err; // throw error in case there is one
-        //     console.log("DB Connected!"); // run this line in case every thing went well 
-        // });
-
-    })
-
     afterAll(() => {
         Con.end(function (err) {
             if (err) {
