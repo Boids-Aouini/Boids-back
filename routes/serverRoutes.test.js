@@ -5,13 +5,13 @@ let Con = require('../db/connectToDB/connectToDB');
 
 describe('Servers routes tests', () => {
 
-    beforeAll(() => {
-        Con.connect(function (err) { // connect to db
-            if (err) throw err; // throw error in case there is one
-            console.log("DB Connected!"); // run this line in case every thing went well 
-        });
+    // beforeAll(() => {
+    //     Con.connect(function (err) { // connect to db
+    //         if (err) throw err; // throw error in case there is one
+    //         console.log("DB Connected!"); // run this line in case every thing went well 
+    //     });
 
-    })
+    // })
 
     afterAll(() => {
         Con.end(function (err) {
@@ -24,15 +24,15 @@ describe('Servers routes tests', () => {
 
     test('should create new Server', () => {
         return request(server)
-            .post('/api/createServer')
+            .post('/api/boidsServers/createServer')
             .send({
                 name: 'testserver',
                 createdAt: '2020-05-05'
             })
-            .set('auth_token', tokenTest)
+            .set({ 'auth_token': tokenTest })
             .then(res => {
-                expect(res.body).toHaveProperty('results')
                 expect(res.statusCode).toBe(201)
+                expect(res.body).toHaveProperty('results')
             })
     })
 })
