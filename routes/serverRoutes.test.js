@@ -25,5 +25,14 @@ describe('authentication routes testing', () => {
     test('should create new Server', () => {
         return request(server)
             .post('/api/createServer')
+            .send({
+                name: 'testserver',
+                createdAt: '2020-05-05'
+            })
+            .set('atuh_token', tokenTest)
+            .then(res => {
+                expect(res.body).toHaveProperty('results')
+                expect(res.statusCode).toBe(201)
+            })
     })
 })
