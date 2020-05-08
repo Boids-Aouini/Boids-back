@@ -5,7 +5,7 @@ let database = 'Boids',
     password = '123456789',
     user = 'root'
 
-if (process.env.NODE_ENV === 'test') { database = 'Teset_Boids' }
+if (process.env.NODE_ENV === 'test') { database = 'Test_Boids' }
 
 
 var connection = mysql.createConnection({ // make connection and provide db information on mysql server
