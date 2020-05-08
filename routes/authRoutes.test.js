@@ -1,10 +1,10 @@
-let app = require('../index');
+let router = require('./authRoutes');
 let request = require('supertest');
 describe('authentication routes testing', () => {
 
     it('should retreive token once register', async () => {
-        const res = await request(app)
-            .post('/register')
+        request(router)
+            .post('/api/auth/register')
             .send({
                 firstname: 'nameTest',
                 lastname: 'lastnameTest',
@@ -13,9 +13,12 @@ describe('authentication routes testing', () => {
                 birthDate: '2000-12-12',
                 createdAt: '2020-05-05'
             })
+            .then(res => {
+                console.log(res.body)
+                console.log(res)
+            })
 
-        console.log(res.body)
-        expect(res.statusCode).toBeEqual(201)
+
 
     })
 
