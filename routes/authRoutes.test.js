@@ -1,10 +1,10 @@
 let router = require('./authRoutes');
 let request = require('supertest');
-let server = 'localhost:4404'
+let server = 'http://localhost:4404'
 describe('authentication routes testing', () => {
 
     it('should retreive token once register', async () => {
-        let res = await request(router)
+        let res = await request(server)
             .post('/api/auth/register')
             .send({
                 firstname: 'nameTest',
