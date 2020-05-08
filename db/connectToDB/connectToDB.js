@@ -14,11 +14,13 @@ var connection = mysql.createConnection({ // make connection and provide db info
     password,
     database
 });
+if (process.env.NODE_ENV !== 'test') {
 
-connection.connect(function (err) { // connect to db
-    if (err) throw err; // throw error in case there is one
-    console.log("DB Connected!"); // run this line in case every thing went well 
-});
+    connection.connect(function (err) { // connect to db
+        if (err) throw err; // throw error in case there is one
+        console.log("DB Connected!"); // run this line in case every thing went well 
+    });
+}
 
 
 module.exports = connection; // export connected mysql server
