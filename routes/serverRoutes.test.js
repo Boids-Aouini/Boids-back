@@ -5,14 +5,14 @@ let Con = require('../db/connectToDB/connectToDB');
 
 describe('Servers routes tests', () => {
 
-    afterAll(() => {
-        Con.end(function (err) {
-            if (err) {
-                return console.log('error:' + err.message);
-            }
+    // afterAll(() => {
+    //     Con.end(function (err) {
+    //         if (err) {
+    //             return console.log('error:' + err.message);
+    //         }
 
-        });
-    })
+    //     });
+    // })
 
     test('should create new Server', () => {
         return request(server)

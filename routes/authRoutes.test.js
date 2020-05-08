@@ -6,12 +6,18 @@ let Con = require('../db/connectToDB/connectToDB');
 describe('authentication routes testing', () => {
 
     afterAll(() => {
+        Con.query('DELETE FROM Users where email = (?)', ['test@test.com'], (err, result) => {
+            if (err) throw err;
+        })
+
         Con.end(function (err) {
             if (err) {
                 return console.log('error:' + err.message);
             }
 
         });
+
+
     })
 
     test('should retreive token once register', () => {
