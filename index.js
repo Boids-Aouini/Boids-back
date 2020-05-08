@@ -17,3 +17,5 @@ require('./routes/serverRoutes')(app, Con); // setup server routes in the server
 let PORT = process.env.PORT = 4404;
 
 app.listen(PORT, () => console.log('server runing on ' + PORT));
+
+module.exports = app;
