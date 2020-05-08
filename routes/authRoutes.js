@@ -21,6 +21,7 @@ router.post('/register', async (req, response) => {
                 let token = jwt.sign({ id: result.insertId }, process.env.TOKEN_SECRET_KEY); // make token
                 response.status(201).send({ // send successful response with token
                     results: {
+                        response: 'handeled register request successfuly',
                         token
                     }
                 })
