@@ -1,10 +1,20 @@
 let router = require('./authRoutes');
 let request = require('supertest');
-let server = 'http://localhost:4404'
+let server = 'http://localhost:4404';
+let Con = require('../db/connectToDB/connectToDB');
 describe('authentication routes testing', () => {
 
-    it('should retreive token once register', () => {
-        request(server)
+    afterAll(() => {
+        Con.end(function (err) {
+            if (err) {
+                return console.log('error:' + err.message);
+            }
+            console.log('Close the database connection.');
+        });
+    })
+
+    test('should retreive token once register', () => {
+        return request(server)
             .post('/api/auth/register')
             .send({
                 firstname: 'nameTest',
@@ -15,9 +25,9 @@ describe('authentication routes testing', () => {
                 createdAt: '2020-05-05'
             })
             .then(res => {
-
-                expect(res.statusCode).toEqual(201)
-                // expect(res.body.results).toHaveProprety('token')
+                console.log(res.data)
+                // expect(res.statusCode).toEqual(201)
+                expect(res.data).toHaveProprety('resulsts')
             })
 
 
