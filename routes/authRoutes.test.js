@@ -25,9 +25,8 @@ describe('authentication routes testing', () => {
                 createdAt: '2020-05-05'
             })
             .then(res => {
-                console.log(res.data)
-                // expect(res.statusCode).toEqual(201)
-                expect(res.data).toHaveProprety('resulsts')
+                expect(res.statusCode).toEqual(201)
+                expect(res.body).toHaveProperty('results')
             })
 
 
