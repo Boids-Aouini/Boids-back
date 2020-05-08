@@ -32,7 +32,7 @@ describe('authentication routes testing', () => {
 
     })
 
-    test('should retreive token once register', () => {
+    test('should retreive token once login', () => {
         return request(server)
             .post('/api/auth/login')
             .send({
