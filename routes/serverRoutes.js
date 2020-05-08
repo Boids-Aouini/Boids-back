@@ -30,3 +30,5 @@ router.post('/createServer', verify, (req, res) => {
                 })
         })
 })
+
+module.exports = router;
