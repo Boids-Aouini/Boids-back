@@ -8,9 +8,9 @@ describe('Servers routes tests', () => {
     afterAll(() => {
         Con.query('DELETE FROM Channels', (err, result) => {
             if (err) throw err
-            Con.query('DELETE FROM Servers', (err, results) => {
-                if (err) throw err;
-            })
+        })
+        Con.query('DELETE FROM Servers', (err, results) => {
+            if (err) throw err;
         })
         Con.end(function (err) {
             if (err) {
