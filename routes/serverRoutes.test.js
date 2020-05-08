@@ -5,14 +5,20 @@ let Con = require('../db/connectToDB/connectToDB');
 
 describe('Servers routes tests', () => {
 
-    // afterAll(() => {
-    //     Con.end(function (err) {
-    //         if (err) {
-    //             return console.log('error:' + err.message);
-    //         }
+    afterAll(() => {
+        Con.query('DELETE FROM Channels', (err, result) => {
+            if (err) throw err
+            Con.query('DELETE FROM Servers', (err, results) => {
+                if (err) throw err;
+            })
+        })
+        Con.end(function (err) {
+            if (err) {
+                return console.log('error:' + err.message);
+            }
 
-    //     });
-    // })
+        });
+    })
 
     test('should create new Server', () => {
         return request(server)
