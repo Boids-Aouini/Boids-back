@@ -32,4 +32,19 @@ describe('authentication routes testing', () => {
 
     })
 
+    test('should retreive token once register', () => {
+        return request(server)
+            .post('/api/auth/login')
+            .send({
+                email: 'test@test.com',
+                password: '123456789'
+            })
+            .then(res => {
+                expect(res.statusCode).toEqual(201)
+                expect(res.body).toHaveProperty('results')
+            })
+
+
+    })
+
 })
