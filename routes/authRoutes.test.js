@@ -2,7 +2,6 @@ let router = require('./authRoutes');
 let request = require('supertest');
 let server = 'http://localhost:4404';
 let Con = require('../db/connectToDB/connectToDB');
-let tokenTest = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjMsImlhdCI6MTU4ODkxODk2OX0.eGAe633XYdu3FrQQhAO_5P7UNWPfjQZ-t6vGqg3M_Pg';
 
 describe('authentication routes testing', () => {
 
