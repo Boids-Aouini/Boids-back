@@ -3,8 +3,8 @@ let request = require('supertest');
 let server = 'http://localhost:4404'
 describe('authentication routes testing', () => {
 
-    it('should retreive token once register', async () => {
-        let res = await request(server)
+    it('should retreive token once register', () => {
+        request(server)
             .post('/api/auth/register')
             .send({
                 firstname: 'nameTest',
@@ -14,10 +14,12 @@ describe('authentication routes testing', () => {
                 birthDate: '2000-12-12',
                 createdAt: '2020-05-05'
             })
+            .then(res => {
 
-        expect(res.statusCode).toEqual(201)
+                expect(res.statusCode).toEqual(201)
+                // expect(res.body.results).toHaveProprety('token')
+            })
 
-        // expect(res.body.results).toHaveProprety('token')
 
     })
 
