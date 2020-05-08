@@ -3,7 +3,7 @@ let tokenTest = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjMsImlhdCI6MTU4OD
 let server = 'http://localhost:4404';
 let Con = require('../db/connectToDB/connectToDB');
 
-describe('authentication routes testing', () => {
+describe('Servers routes tests', () => {
 
     beforeAll(() => {
         Con.connect(function (err) { // connect to db
@@ -29,7 +29,7 @@ describe('authentication routes testing', () => {
                 name: 'testserver',
                 createdAt: '2020-05-05'
             })
-            .set('atuh_token', tokenTest)
+            .set('auth_token', tokenTest)
             .then(res => {
                 expect(res.body).toHaveProperty('results')
                 expect(res.statusCode).toBe(201)
