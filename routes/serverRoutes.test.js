@@ -38,6 +38,8 @@ describe('Servers routes tests', () => {
             .then(res => {
                 expect(res.statusCode).toBe(201)
                 expect(res.body).toHaveProperty('results')
+                expect(res.body.results).toHaveProperty('server')
+                expect(res.body.results).toHaveProperty('response')
             })
     })
 
