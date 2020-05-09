@@ -32,7 +32,6 @@ router.post('/register', async (req, response) => {
 
 router.post('/login', async (req, response) => {
     let { email, password } = req.body;
-    console.log(req.body)
     await Con.query("SELECT id, password FROM Users WHERE email = (?)", email, (err, result) => {
         if (err) { response.status(400).send(err).end() } // send error in case there is one
         else {
