@@ -41,6 +41,7 @@ describe('authentication routes testing', () => {
             .then(res => {
                 expect(res.statusCode).toEqual(201)
                 expect(res.body).toHaveProperty('results')
+                expect(res.body.results).toHaveProperty('token')
             })
 
 
