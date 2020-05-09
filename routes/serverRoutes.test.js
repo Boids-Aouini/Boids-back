@@ -5,7 +5,20 @@ let Con = require('../db/connectToDB/connectToDB');
 
 describe('Servers routes tests', () => {
 
+    beforeAll(() => {
+        Con.connect(function (err) { // connect to db
+            if (err) throw err; // throw error in case there is one
+            console.log("DB Connected!"); // run this line in case every thing went well 
+        });
+    })
+
     afterAll(() => {
+        Con.query('DELETE FROM Channels', (err, result) => {
+            if (err) throw err
+        })
+        Con.query('DELETE FROM Servers', (err, results) => {
+            if (err) throw err;
+        })
         Con.end(function (err) {
             if (err) {
                 return console.log('error:' + err.message);
@@ -25,6 +38,20 @@ describe('Servers routes tests', () => {
             .then(res => {
                 expect(res.statusCode).toBe(201)
                 expect(res.body).toHaveProperty('results')
+                expect(res.body.results).toHaveProperty('server')
+                expect(res.body.results).toHaveProperty('response')
+            })
+    })
+
+    test('should retreive server', () => {
+        return request(server)
+            .get('/api/boidsServers/serversAsLeader')
+            .set({ 'auth_token': tokenTest })
+            .then(res => {
+                expect(res.statusCode).toBe(200)
+                expect(res.body).toHaveProperty('results')
+                expect(res.body.results).toHaveProperty('servers')
+                expect(res.body.results).toHaveProperty('response')
             })
     })
 })

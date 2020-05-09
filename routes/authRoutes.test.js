@@ -5,13 +5,26 @@ let Con = require('../db/connectToDB/connectToDB');
 
 describe('authentication routes testing', () => {
 
+    beforeAll(() => {
+        Con.connect(function (err) { // connect to db
+            if (err) throw err; // throw error in case there is one
+            console.log("DB Connected!"); // run this line in case every thing went well 
+        });
+    })
+
     afterAll(() => {
+        Con.query('DELETE FROM Users where email = (?)', ['test@test.com'], (err, result) => {
+            if (err) throw err;
+        })
+
         Con.end(function (err) {
             if (err) {
                 return console.log('error:' + err.message);
             }
 
         });
+
+
     })
 
     test('should retreive token once register', () => {
@@ -28,6 +41,7 @@ describe('authentication routes testing', () => {
             .then(res => {
                 expect(res.statusCode).toEqual(201)
                 expect(res.body).toHaveProperty('results')
+                expect(res.body.results).toHaveProperty('token')
             })
 
 
@@ -43,6 +57,8 @@ describe('authentication routes testing', () => {
             .then(res => {
                 expect(res.statusCode).toEqual(201)
                 expect(res.body).toHaveProperty('results')
+                expect(res.body.results).toHaveProperty('token')
+
             })
 
 
