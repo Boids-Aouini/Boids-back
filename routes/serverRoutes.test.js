@@ -40,4 +40,16 @@ describe('Servers routes tests', () => {
                 expect(res.body).toHaveProperty('results')
             })
     })
+
+    test('should retreive server', () => {
+        return request(server)
+            .get('/api/boidsServers/serversAsLeader')
+            .set({ 'auth_token': tokenTest })
+            .then(res => {
+                expect(res.statusCode).toBe(200)
+                expect(res.body).toHaveProperty('results')
+                expect(res.body.results).toHaveProperty('servers')
+                expect(res.body.results).toHaveProperty('response')
+            })
+    })
 })
