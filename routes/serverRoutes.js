@@ -31,4 +31,19 @@ router.post('/createServer', verify, (req, res) => {
         })
 })
 
+router.get('/serversAsLeader', verify, async (req, res) => {
+    let userId = req.user.id;
+
+    Con.query('SELECT Servers.name, Servers.id FROM Servers INNER JOIN Users ON Users.id = (?)', [userId],
+        (err, result) => {
+            if (err) { res.status(400).send(err).end() }
+            res.status(200).send({
+                results: {
+                    response: 'Handeled get servers as a leader request',
+                    servers: result
+                }
+            })
+        })
+})
+
 module.exports = router;
