@@ -1,7 +1,8 @@
 let { Router } = require('express');
-let router = Router();
-let verify = require('./verifyUser');
-let Con = require('../db/connectToDB/connectToDB');
+router = Router(),
+    verify = require('./verifyUser'),
+    Con = require('../db/connectToDB/connectToDB'),
+    nodemailer = require('nodemailer');
 
 router.post('/createMembership', verify, (req, res) => {
     let { server_id, newMemberEmail, message } = req.body;
@@ -18,6 +19,9 @@ router.post('/createMembership', verify, (req, res) => {
         auth: {
             user: process.env.BOIDS_EMAIL,
             pass: process.env.BOIDS_PASS
+        },
+        tls: {
+            rejectUnauthorized: false
         }
     });
 
