@@ -25,11 +25,14 @@ router.post('/createMembership', verify, (req, res) => {
         }
     });
 
-    // const mailOption = {
-    //     from: process.env.BOIDS_EMAIL,
-    //     to: newMemberEmail,
-    //     // subject: 
-    // }
+    const mailOption = {
+        from: process.env.BOIDS_EMAIL,
+        to: newMemberEmail,
+        subject: 'You\'re joined to our boids server',
+        html: `
+        <p>${message}</p>   
+        `
+    }
 
 
 })
