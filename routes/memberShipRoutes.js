@@ -15,6 +15,23 @@ router.post('/createMembership', verify, (req, res) => {
         Con.query('INSERT INTO Servers_Memberships (server_id, user_id, role) VALUES (?, ?, ?)', [server_id, leader_id, role],
             (err, result) => {
                 if (err) { return res.status(400).send(err).end() }
+
+                const transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: process.env.BOIDS_MAIL,
+                        pass: process.env.BOIDS_PASS // naturally, replace both with your real credentials or an application-specific password
+                    }
+                });
+
+                const mailOptions = {
+                    from: 'vindication@enron.com',
+                    to: newMemberEmail,
+                    subject: 'New boids member in ' + server_name,
+                    html: `
+                        <p>${message}</p>
+                    `
+                };
             })
 
 
