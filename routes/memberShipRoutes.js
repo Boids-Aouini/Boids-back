@@ -12,7 +12,7 @@ router.post('/createMembership', verify, (req, res) => {
         let { leader_id, firstname, lastname, name, id } = result[0];
         if (leader_id !== res.user.id) { return res.status(400).send('only leader can add new members') }
 
-        Con.query('INSERT INTO Servers_Memberships (server_id, user_id, role) VALUES (?, ?, ?)', [server_id, leader_id, role],
+        Con.query('INSERT INTO Servers_Memberships (server_id, user_id, role) VALUES (?, ?, ?)', [server_id, id, role],
             (err, result) => {
                 if (err) { return res.status(400).send(err).end() }
 
@@ -27,7 +27,7 @@ router.post('/createMembership', verify, (req, res) => {
                 const mailOptions = {
                     from: process.env.BOIDS_MAIL,
                     to: newMemberEmail,
-                    subject: 'New boids member in ' + server_name,
+                    subject: 'New ' + name + ' member in ' + server_name,
                     html: `
                         <p>${message}</p>
                     `
