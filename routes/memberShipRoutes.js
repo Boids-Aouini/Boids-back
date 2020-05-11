@@ -8,6 +8,7 @@ router.post('/createMembership', verify, (req, res) => {
     let { server_id, newMemberEmail, message } = req.body;
     Con.query('SELECT leader_id FROM Servers where id = (?)', [server_id], (err, result) => {
         if (err) { return res.status(400).send(err).end() }
+        if (!result[0]) { return res.status(404).send('server is not found').end() }
     })
 
     Con.query('SELECT firstname, lastname FROM Users WHERE email = (?)', [newMemberEmail], (err, result) => {
