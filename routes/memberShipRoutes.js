@@ -5,20 +5,17 @@ router = Router(),
     nodemailer = require('nodemailer');
 
 router.post('/createMembership', verify, (req, res) => {
-    let { server_id, newMemberEmail, message } = req.body;
-    Con.query('SELECT leader_id FROM Servers where id = (?)', [server_id], (err, result) => {
+    let { server_id, newMemberEmail, message, role } = req.body;
+    Con.query('SELECT Users.id, Users.firstname, Users.lastname, Servers.leader_id, Servers.name FROM Users INNER JOIN Servers ON Servers.leader_id = (?) AND Users.email = (?)', [server_id, newMemberEmail], (err, result) => {
         if (err) { return res.status(400).send(err).end() }
         if (!result[0]) { return res.status(404).send('server is not found').end() }
-        let { leader_id } = result[0];
+        let { leader_id, firstname, lastname, name } = result[0];
         if (leader_id !== res.user.id) { return res.status(400).send('only leader can add new members') }
-        Con.query('SELECT id, firstname, lastname FROM Users WHERE email = (?)', [newMemberEmail], (err, result) => {
-            if (err) { return res.status(400).send(err).end() }
-            if (!result[0]) { return res.status(404).send('users with this email doesn\'t have an account unfortunately').end() }
-            let { firstname, lastname } = result[0];
 
-            // Con.query('INSERT INTO Servers_Memberships (server_id, ')
 
-        })
+        // Con.query('INSERT INTO Servers_Memberships (server_id, user_id, role) VALUES (?, ?, ?)', [])
+
+
     })
 
 
