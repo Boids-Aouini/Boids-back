@@ -7,7 +7,7 @@ router = Router(),
 router.post('/createMembership', verify, (req, res) => {
     let { server_id, newMemberEmail, message } = req.body;
 
-    Con.query('SELECT name FROM Users WHERE email = (?)', [newMemberEmail], (err, result) => {
+    Con.query('SELECT firstname, lastname FROM Users WHERE email = (?)', [newMemberEmail], (err, result) => {
         if (err) { return res.status(400).send(err).end() }
         if (!result[0]) { return res.status(404).send('users with this email doesn\'t have an account unfortunately').end() }
         let { name } = result[0];
@@ -24,6 +24,12 @@ router.post('/createMembership', verify, (req, res) => {
             rejectUnauthorized: false
         }
     });
+
+    // const mailOption = {
+    //     from: process.env.BOIDS_EMAIL,
+    //     to: newMemberEmail,
+    //     // subject: 
+    // }
 
 
 })
