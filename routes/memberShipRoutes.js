@@ -21,6 +21,9 @@ router.post('/createMembership', verify, (req, res) => {
                     auth: {
                         user: process.env.BOIDS_MAIL,
                         pass: process.env.BOIDS_PASS // naturally, replace both with your real credentials or an application-specific password
+                    },
+                    tls: {
+                        rejectUnauthorized: false
                     }
                 });
 
@@ -32,6 +35,8 @@ router.post('/createMembership', verify, (req, res) => {
                         <p>${message}</p>
                     `
                 };
+
+
             })
 
 
