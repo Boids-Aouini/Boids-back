@@ -38,12 +38,12 @@ router.post('/createMembership', verify, (req, res) => {
                     `
                 };
 
-                transporter.sendMail(mailOptions, (error, info) => {
+                transporter.sendMail(mailOptions, (error, info) => { // send email
                     if (error) {
-                        return res.status(400).send(error).end();
+                        return res.status(400).send('Couldn\' send email to member').end();
                     }
 
-                    res.status(201).send({
+                    res.status(201).send({ // send successful request
                         results: {
                             response: 'New member has been added'
                         }
