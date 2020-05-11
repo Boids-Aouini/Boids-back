@@ -5,7 +5,7 @@ router = Router(),
     nodemailer = require('nodemailer');
 
 router.post('/createMembership', verify, (req, res) => {
-    let { server_id, server_name, newMemberEmail, message, role } = req.body;
+    let { server_id, newMemberEmail, message, role } = req.body;
     Con.query('SELECT Users.id, Users.firstname, Users.lastname, Servers.leader_id, Servers.name FROM Users INNER JOIN Servers ON Servers.leader_id = (?) AND Users.email = (?) AND Servers.name = (?)', [server_id, newMemberEmail, server_name], (err, result) => {
         // retreive data needed from users and servers tables
         if (err) { return res.status(400).send(err).end() } // send error in case there is one
