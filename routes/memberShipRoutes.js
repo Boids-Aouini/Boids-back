@@ -11,34 +11,15 @@ router.post('/createMembership', verify, (req, res) => {
         if (!result[0]) { return res.status(404).send('server is not found').end() }
         let { leader_id } = result[0];
         if (leader_id !== res.user.id) { return res.status(400).send('only leader can add new members') }
+        Con.query('SELECT id, firstname, lastname FROM Users WHERE email = (?)', [newMemberEmail], (err, result) => {
+            if (err) { return res.status(400).send(err).end() }
+            if (!result[0]) { return res.status(404).send('users with this email doesn\'t have an account unfortunately').end() }
+            let { firstname, lastname } = result[0];
+
+            // Con.query('INSERT INTO Servers_Memberships (server_id, ')
+
+        })
     })
-
-    Con.query('SELECT firstname, lastname FROM Users WHERE email = (?)', [newMemberEmail], (err, result) => {
-        if (err) { return res.status(400).send(err).end() }
-        if (!result[0]) { return res.status(404).send('users with this email doesn\'t have an account unfortunately').end() }
-        let { name } = result[0];
-
-    })
-
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: process.env.BOIDS_EMAIL,
-            pass: process.env.BOIDS_PASS
-        },
-        tls: {
-            rejectUnauthorized: false
-        }
-    });
-
-    const mailOption = {
-        from: process.env.BOIDS_EMAIL,
-        to: newMemberEmail,
-        subject: 'You\'re joined to our boids server',
-        html: `
-        <p>${message}</p>   
-        `
-    }
 
 
 })
