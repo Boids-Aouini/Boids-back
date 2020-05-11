@@ -25,7 +25,7 @@ router.post('/createMembership', verify, (req, res) => {
                 });
 
                 const mailOptions = {
-                    from: 'vindication@enron.com',
+                    from: process.env.BOIDS_MAIL,
                     to: newMemberEmail,
                     subject: 'New boids member in ' + server_name,
                     html: `
