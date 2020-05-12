@@ -5,8 +5,9 @@ router = Router(),
     nodemailer = require('nodemailer');
 
 router.post('/createMembership', verify, (req, res) => {
-    let { server_id, newMemberEmail, message, role } = req.body;
-    Con.query('SELECT Users.id, Users.firstname, Users.lastname, Servers.leader_id, Servers.name FROM Users INNER JOIN Servers ON Servers.leader_id = (?) AND Users.email = (?) AND Servers.name = (?)', [server_id, newMemberEmail, server_name], (err, result) => {
+    let { server_id, email, message, role } = req.body;
+    console.log(req.user.id, email, server_id)
+    Con.query('SELECT Users.id, Users.firstname, Users.lastname, Servers.leader_id, Servers.name FROM Users INNER JOIN Servers ON Servers.leader_id = (?) AND Users.email = (?) AND Servers.id = (?)', [req.user.id, email, server_id], (err, result) => {
         // retreive data needed from users and servers tables
         if (err) { return res.status(400).send(err).end() } // send error in case there is one
         if (!result[0]) { return res.status(401).send('data is not found').end() } // send server not found in case it's not found
@@ -31,7 +32,7 @@ router.post('/createMembership', verify, (req, res) => {
 
                 const mailOptions = { // make mail options
                     from: process.env.BOIDS_MAIL,
-                    to: newMemberEmail,
+                    to: email,
                     subject: 'New ' + name + ' member in',
                     html: `
                         <p>${message}</p>
