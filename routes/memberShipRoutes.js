@@ -7,7 +7,7 @@ router = Router(),
 
 router.post('/createMembership', verify, (req, res) => {
     let { server_id, email, message, role } = req.body;
-
+    console.log(email, process.env.BOIDS_EMAIL)
     Con.query('SELECT Users.id, Users.firstname, Users.lastname, Servers.leader_id, Servers.name FROM Users INNER JOIN Servers ON Servers.leader_id = (?) AND Users.email = (?) AND Servers.id = (?)', [req.user.id, email, server_id], (err, result) => {
         // retreive data needed from users and servers tables
         if (err) { return res.status(400).send(err).end() } // send error in case there is one
@@ -26,7 +26,7 @@ router.post('/createMembership', verify, (req, res) => {
                 if (err) { return res.status(400).send(err).end() }// send error in case there is one
 
                 const mailOptions = { // make mail options
-                    from: process.env.BOIDS_MAIL,
+                    from: process.env.BOIDS_EMAIL,
                     to: email,
                     subject: 'Your a ' + name + ' new member',
                     text: message
