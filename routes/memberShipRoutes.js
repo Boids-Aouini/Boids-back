@@ -9,7 +9,7 @@ router.post('/createMembership', verify, (req, res) => {
     Con.query('SELECT Users.id, Users.firstname, Users.lastname, Servers.leader_id, Servers.name FROM Users INNER JOIN Servers ON Servers.leader_id = (?) AND Users.email = (?) AND Servers.name = (?)', [server_id, newMemberEmail, server_name], (err, result) => {
         // retreive data needed from users and servers tables
         if (err) { return res.status(400).send(err).end() } // send error in case there is one
-        if (!result[0]) { return res.status(404).send('server is not found').end() } // send server not found in case it's not found
+        if (!result[0]) { return res.status(401).send('data is not found').end() } // send server not found in case it's not found
         let { leader_id, firstname, lastname, name, id } = result[0];
         if (leader_id !== res.user.id) { return res.status(400).send('only leader can add new members') } // send only leader can add new members if sender is 
 
