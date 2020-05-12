@@ -24,13 +24,11 @@ router.post('/createMembership', verify, (req, res) => {
             // insert new membership in server_memeberships table    
             (err, result) => {
                 if (err) { return res.status(400).send(err).end() }// send error in case there is one
-                console.log('making transprter')
-
 
                 const mailOptions = { // make mail options
                     from: process.env.BOIDS_MAIL,
                     to: email,
-                    subject: 'New ' + name + ' member in',
+                    subject: 'Your a ' + name + ' new member in',
                     text: message
                 };
                 console.log('sending email')
