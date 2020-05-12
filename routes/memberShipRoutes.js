@@ -28,7 +28,7 @@ router.post('/createMembership', verify, (req, res) => {
                 const mailOptions = { // make mail options
                     from: process.env.BOIDS_MAIL,
                     to: email,
-                    subject: 'Your a ' + name + ' new member in',
+                    subject: 'Your a ' + name + ' new member',
                     text: message
                 };
                 console.log('sending email')
