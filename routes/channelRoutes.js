@@ -3,10 +3,12 @@ let router = Router();
 let Con = require('../db/connectToDB/connectToDB');
 let verify = require('./verifyUser');
 
-router.get('/getChannels', verify, async (req, res) => {
+router.get('/makeChannel', verify, async (req, res) => {
     let { id } = req.user;
-
-    // Con.query
+    let { server_id, createdAt, name } = req.body
+    Con.query('SELECT leader_id FROM Servers WHERE id = (?)', [server_id], (err, result) => {
+        if (err) { return res.status(400).send(err).end() }
+    })
 })
 
 

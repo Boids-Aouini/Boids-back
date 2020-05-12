@@ -28,7 +28,7 @@ router.post('/createMembership', verify, (req, res) => {
                 const mailOptions = { // make mail options
                     from: process.env.BOIDS_EMAIL,
                     to: email,
-                    subject: 'Your a ' + name + ' new member',
+                    subject: 'Your a new member',
                     text: message
                 };
                 console.log('sending email')
@@ -37,7 +37,7 @@ router.post('/createMembership', verify, (req, res) => {
                         console.log(error)
                         return res.status(400).send('Couldn\' send email to member').end();
                     }
-
+                    console.log('email has been sent')
                     res.status(201).send({ // send successful request
                         results: {
                             response: 'New member has been added'
