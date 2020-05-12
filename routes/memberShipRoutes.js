@@ -2,6 +2,7 @@ let { Router } = require('express');
 router = Router(),
     verify = require('./verifyUser'),
     Con = require('../db/connectToDB/connectToDB'),
+    transporter = require('./mailTransporter'),
     nodemailer = require('nodemailer');
 
 router.post('/createMembership', verify, (req, res) => {
@@ -18,34 +19,24 @@ router.post('/createMembership', verify, (req, res) => {
             id } = result[0];
 
         if (leader_id !== req.user.id) { return res.status(400).send('only leader can add new members') } // send only leader can add new members if sender is 
-        console.log(id, leader_id)
+        console.log(id, leader_id, role)
         Con.query('INSERT INTO Servers_Memberships (server_id, user_id, role) VALUES (?, ?, ?)', [server_id, id, role],
             // insert new membership in server_memeberships table    
             (err, result) => {
                 if (err) { return res.status(400).send(err).end() }// send error in case there is one
                 console.log('making transprter')
-                const transporter = nodemailer.createTransport({ // make transporter
-                    service: 'gmail',
-                    auth: {
-                        user: process.env.BOIDS_MAIL,
-                        pass: process.env.BOIDS_PASS // naturally, replace both with your real credentials or an application-specific password
-                    },
-                    tls: { // run locally
-                        rejectUnauthorized: false
-                    }
-                });
+
 
                 const mailOptions = { // make mail options
                     from: process.env.BOIDS_MAIL,
                     to: email,
                     subject: 'New ' + name + ' member in',
-                    html: `
-                        <p>${message}</p>
-                    `
+                    text: message
                 };
                 console.log('sending email')
                 transporter.sendMail(mailOptions, (error, info) => { // send email
                     if (error) {
+                        console.log(error)
                         return res.status(400).send('Couldn\' send email to member').end();
                     }
 
