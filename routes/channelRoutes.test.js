@@ -28,7 +28,17 @@ describe('Channels routes tests', () => {
     })
 
     test('insert new channel', () => {
-        request(server)
-            .post('/makeChannel')
+        return request(server)
+            .post('/api/channels/makeChannel')
+            .send({
+                server_id: serverTestId,
+                name: 'test',
+                createdAt: '2020-05-05'
+            })
+            .set({ 'auth_token': tokenTest })
+            .then(res => {
+                expect(res.statusCode).toEqual(201)
+                expect(res.body.results).toHaveProperty('newChannel')
+            })
     })
 })
