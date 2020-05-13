@@ -16,7 +16,7 @@ describe('Servers routes tests', () => {
         Con.query('DELETE FROM Channels', (err, result) => {
             if (err) throw err
         })
-        Con.query('DELETE FROM Servers', (err, results) => {
+        Con.query('DELETE FROM Servers WHERE name = (?)', ['testserver'], (err, results) => {
             if (err) throw err;
         })
         Con.end(function (err) {
