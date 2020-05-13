@@ -9,9 +9,14 @@ router.get('/makeChannel', verify, async (req, res) => {
     Con.query('SELECT leader_id FROM Servers WHERE id = (?)', [server_id], (err, result) => {
         if (err) { return res.status(400).send(err).end() }
         let { leader_id } = result[0];
-
         if (id !== leader_id) { return res.status(401).send('Only server\'s leaders can create channels') }
+
+        Con.query('INSERT INTO Channels (server_id, name, createdAt) VALUES (?, ?, ?)', [server_id, name, createdAt],
+            (err, result) => {
+                if (err) { return res.status(400).send('there is a problem in creating a new channel !') }
+            })
     })
+
 })
 
 
