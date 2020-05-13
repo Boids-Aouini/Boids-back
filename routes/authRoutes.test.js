@@ -1,4 +1,3 @@
-let router = require('./authRoutes');
 let request = require('supertest');
 let server = 'http://localhost:4404';
 let Con = require('../db/connectToDB/connectToDB');
