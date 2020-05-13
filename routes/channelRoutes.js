@@ -14,6 +14,15 @@ router.get('/makeChannel', verify, async (req, res) => {
         Con.query('INSERT INTO Channels (server_id, name, createdAt) VALUES (?, ?, ?)', [server_id, name, createdAt],
             (err, result) => {
                 if (err) { return res.status(400).send('there is a problem in creating a new channel !') }
+                res.status(201).send({
+                    results: {
+                        response: 'Handeled make new channel request',
+                        newChannel: {
+                            name,
+                            id: result.insertId
+                        }
+                    }
+                })
             })
     })
 
