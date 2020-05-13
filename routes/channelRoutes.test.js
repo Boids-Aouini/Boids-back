@@ -51,4 +51,14 @@ describe('Channels routes tests', () => {
                 expect(res.body.results).toHaveProperty('newChannel')
             })
     })
+
+    test('retreive server\'s channels', () => {
+        return request(server)
+            .get('/api/channels/getChannels')
+            .set({ 'auth_token': tokenTest })
+            .then(res => {
+                expect(res.statusCode).toEqual(200)
+                expect(res.body.results).toHaveProperty('channels')
+            })
+    })
 })
