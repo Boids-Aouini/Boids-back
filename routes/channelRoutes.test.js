@@ -10,16 +10,16 @@ describe('Channels routes tests', () => {
             if (err) throw err; // throw error in case there is one
             console.log("DB Connected!"); // run this line in case every thing went well 
         });
-        request(server)
-            .post('/api/boidsServers/createServer')
-            .send({
-                name: 'test',
-                createdAt: '2020-05-05'
-            })
-            .set({ auth_token: tokenTest })
-            .then(res => {
-                serverTestId = res.body.results.server.server_id
-            })
+        // request(server)
+        //     .post('/api/boidsServers/createServer')
+        //     .send({
+        //         name: 'test',
+        //         createdAt: '2020-05-05'
+        //     })
+        //     .set({ auth_token: tokenTest })
+        //     .then(res => {
+        //         serverTestId = res.body.results.server.server_id
+        //     })
     })
 
     afterAll(() => {

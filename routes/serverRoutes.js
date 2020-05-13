@@ -24,7 +24,7 @@ router.post('/createServer', verify, (req, res) => {
                     res.status(201).send({ // send successful response
                         results: {
                             response: "Handeled create new server request",
-                            server: { server_id, name }
+                            server: { id: server_id, name }
                         }
                     }).end();
                 })
