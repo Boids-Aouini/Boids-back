@@ -3,7 +3,7 @@ let router = Router();
 let Con = require('../db/connectToDB/connectToDB');
 let verify = require('./verifyUser');
 
-router.get('/makeChannel', verify, async (req, res) => {
+router.post('/makeChannel', verify, async (req, res) => {
     let { id } = req.user;
     let { server_id, createdAt, name } = req.body
     Con.query('SELECT leader_id FROM Servers WHERE id = (?)', [server_id], (err, result) => {

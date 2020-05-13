@@ -48,6 +48,7 @@ describe('Channels routes tests', () => {
             .set({ 'auth_token': tokenTest })
             .then(res => {
                 expect(res.statusCode).toEqual(201)
+                console.log(res.body)
                 expect(res.body.results).toHaveProperty('newChannel')
             })
     })
