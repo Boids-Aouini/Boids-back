@@ -26,4 +26,9 @@ describe('Channels routes tests', () => {
 
 
     })
+
+    test('insert new channel', () => {
+        request(server)
+            .post('/makeChannel')
+    })
 })
