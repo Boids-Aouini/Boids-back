@@ -29,11 +29,13 @@ router.post('/makeChannel', verify, async (req, res) => {
 })
 
 router.get('/getChannels/:server_id', verify, async (req, res) => {
-    let { server_id } = req.params;
+    let { server_id } = req.params; // retrieve server id from params
 
     Con.query('SELECT id, name FROM Channels WHERE server_id = (?)', [server_id], (err, channels) => {
-        if (err) { return res.status(400).send('There is a problem on retreiving channels from db').end() }
-        res.status(200).send({
+        // retreive id and name from channels table where server_id equals to server_id that is retrieve from params
+        if (err) { return res.status(400).send('There is a problem on retreiving channels from db').end() } // send error in case there is one
+        console.log(channels)
+        res.status(200).send({ // send successful response if every thing went well
             results: {
                 response: 'Handeled get server\'s channels request',
                 channels
