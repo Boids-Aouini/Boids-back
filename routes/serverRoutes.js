@@ -35,9 +35,10 @@ router.get('/serversAsLeader', verify, async (req, res) => {
     let userId = req.user.id;
 
     Con.query('SELECT name, id FROM Servers WHERE leader_id = (?)', [userId],
+        // retreive name and id from servers table where leader id equals to logged in user
         (err, result) => {
-            if (err) { res.status(400).send(err).end() }
-            res.status(200).send({
+            if (err) { res.status(400).send(err).end() } // send error in case there is one
+            res.status(200).send({ // send successful response
                 results: {
                     response: 'Handeled get servers as a leader request',
                     servers: result
