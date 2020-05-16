@@ -7,14 +7,17 @@ router.post('/makeChannel', verify, async (req, res) => {
     let { id } = req.user;
     let { server_id, createdAt, name } = req.body
     Con.query('SELECT leader_id FROM Servers WHERE id = (?)', [server_id], (err, result) => {
-        if (err) { return res.status(400).send(err).end() }
+        // retreive leader_id where the id of server equals server_id
+        if (err) { return res.status(400).send(err).end() } // send error in case there is one
         let { leader_id } = result[0];
         if (id !== leader_id) { return res.status(401).send('Only server\'s leaders can create channels') }
+        // if leader_id doesn't equal to the loged in user send error response
 
         Con.query('INSERT INTO Channels (server_id, name, createdAt) VALUES (?, ?, ?)', [server_id, name, createdAt],
+            // insert new channel
             (err, result) => {
-                if (err) { return res.status(400).send('there is a problem in creating a new channel !') }
-                res.status(201).send({
+                if (err) { return res.status(400).send('there is a problem in creating a new channel !') } // send error incase there is one
+                res.status(201).send({ // send successful response
                     results: {
                         response: 'Handeled make new channel request',
                         newChannel: {
