@@ -54,7 +54,7 @@ describe('Channels routes tests', () => {
 
     test('retreive server\'s channels', () => {
         return request(server)
-            .get('/api/channels/getChannels')
+            .get('/api/channels/getChannels/' + serverTestId)
             .set({ 'auth_token': tokenTest })
             .then(res => {
                 expect(res.statusCode).toEqual(200)
