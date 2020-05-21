@@ -47,7 +47,7 @@ router.get('/getChannels/:server_id', verify, async (req, res) => {
     })
 })
 
-router('/send', verify, async (req, res) => {
+router.post('/send', verify, async (req, res) => {
     let user_id = req.user.id,
         { channel_id, message, createdAt } = req.body;
 
