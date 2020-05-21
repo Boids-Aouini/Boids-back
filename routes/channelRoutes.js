@@ -51,7 +51,7 @@ router.post('/send', verify, async (req, res) => {
     let user_id = req.user.id,
         { channel_id, message, createdAt } = req.body;
 
-    Con.query('INSERT INTO Channels_Posts (user_id, channel_id, post, isHidden, createdAt) VALUES ?', [user_id, channel_id, message, false, createdAt],
+    Con.query('INSERT INTO Channels_Posts (user_id, channel_id, post, isHidden, createdAt) VALUES (?, ?, ?, ?, ?)', [user_id, channel_id, message, false, createdAt],
         (err, result) => {
             if (err) { return res.status(400).send('there is a problem sending the message').end() }
             Con.query('SELECT Users.firstname, Users.lastname, Channels_Posts.isHidden, Channels_Posts.post FROM Channels_Posts INNER JOIN Users ON Channels_Posts.id = (?)', [result.insertId],
