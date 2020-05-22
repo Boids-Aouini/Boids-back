@@ -82,8 +82,11 @@ router.get('/getPosts/:server_id/:channel_id', verify, async (req, res) => {
         (error, posts) => {
             if (error) { return res.status(400).send({ message: 'there is a problem retreiving posts from db', error }) }
             return res.status(200).send({
-                response: 'Handeled get posts request',
-                posts
+                results: {
+
+                    response: 'Handeled get posts request',
+                    posts
+                }
             })
         })
 })
