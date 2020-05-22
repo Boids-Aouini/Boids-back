@@ -41,7 +41,9 @@ router.get('/getChannels/:server_id', verify, async (req, res) => {
         res.status(200).send({ // send successful response if every thing went well
             results: {
                 response: 'Handeled get server\'s channels request',
-                channels
+                channels,
+                server_id
+
             }
         })
     })
