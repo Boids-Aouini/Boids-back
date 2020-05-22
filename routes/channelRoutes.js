@@ -74,9 +74,9 @@ router.post('/send', verify, async (req, res) => {
         })
 })
 
-router.get('/getPosts/:channel_id', verify, async (req, res) => {
-    let { channel_id } = req.params;
-    Con.query('SELECT Channels_Posts.id, Channels_Posts.post, Channels_Posts.isHidden, Users.firstname, Users.lastname FROM Channels_Posts INNER JOIN Users ON Channels_Posts.channel_id = (?) AND Channels_Posts.user_id = (SELECT id FROM Users) ', [channel_id],
+router.get('/getPosts/:server_id/:channel_id', verify, async (req, res) => {
+    let { channel_id, server_id } = req.params;
+    Con.query('SELECT Channels_Posts.id, Channels_Posts.post, Channels_Posts.isHidden, Users.firstname, Users.lastname FROM Channels_Posts INNER JOIN Users ON Channels_Posts.channel_id = (?) AND Users.id IN (SELECT user_id FROM Servers WHERE id = (?)) ', [channel_id, server_id],
         (error, posts) => {
             if (error) { return res.status(400).send({ message: 'there is a problem retreiving posts from db', error }) }
             return res.status(200).send({
