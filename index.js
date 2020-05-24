@@ -6,7 +6,7 @@ let cors = require('cors');
 let socketIO = require('socket.io');
 let http = require('http');
 let Con = require('./db/connectToDB/connectToDB'); // retreive connected db
-
+let jwt = require('jsonwebtoken');
 app.use(cors());
 
 app.use(bodyParser.json())
@@ -27,7 +27,7 @@ io.on('connection', socket => {
 
         if (verifiedUser) {
             let user_id = verifiedUser.id,
-                { channel_id, message, createdAt } = newMessage;
+                { channel_id, message, createdAt, server_id } = newMessage;
 
             Con.query('INSERT INTO Channels_Posts (user_id, channel_id, post, isHidden, createdAt) VALUES (?, ?, ?, ?, ?)', [user_id, channel_id, message, false, createdAt],
                 (err, result) => {
@@ -42,6 +42,8 @@ io.on('connection', socket => {
                                     newMessage: {
                                         id: result.insertId,
                                         firstname,
+                                        channel_id,
+                                        server_id,
                                         lastname,
                                         isHidden,
                                         post
