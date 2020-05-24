@@ -22,9 +22,35 @@ let io = socketIO(server);
 io.on('connection', socket => {
     console.log('New Client is connected', socket.id);
     socket.on('sendPost', (newMessage) => {
-        console.log(newMessage)
         let { token } = newMessage;
         let verifiedUser = jwt.verify(token, process.env.TOKEN_SECRET_KEY);
+
+        if (verifiedUser) {
+            let user_id = verifiedUser.id,
+                { channel_id, message, createdAt } = newMessage;
+
+            Con.query('INSERT INTO Channels_Posts (user_id, channel_id, post, isHidden, createdAt) VALUES (?, ?, ?, ?, ?)', [user_id, channel_id, message, false, createdAt],
+                (err, result) => {
+                    if (err) { throw err }
+                    Con.query('SELECT Users.firstname, Users.lastname, Channels_Posts.isHidden, Channels_Posts.post FROM Channels_Posts INNER JOIN Users ON Channels_Posts.id = (?)', [result.insertId],
+                        (err, result) => {
+                            if (err) { throw err }
+                            let { firstname, lastname, isHidden, post } = result[0];
+
+                            socket.emit('sendPost', {
+                                results: {
+                                    newMessage: {
+                                        id: result.insertId,
+                                        firstname,
+                                        lastname,
+                                        isHidden,
+                                        post
+                                    }
+                                }
+                            })
+                        })
+                })
+        }
 
     })
     socket.on('disconnect', () => {
