@@ -23,6 +23,9 @@ io.on('connection', socket => {
     console.log('New Client is connected', socket.id);
     socket.on('sendPost', (newMessage) => {
         console.log(newMessage)
+        let { token } = newMessage;
+        let verifiedUser = jwt.verify(token, process.env.TOKEN_SECRET_KEY);
+
     })
     socket.on('disconnect', () => {
         console.log(`Client disconnected ${socket.id}`)
