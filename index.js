@@ -1,9 +1,10 @@
+require('dotenv').config()
 let express = require('express');
 let app = express();
 let bodyParser = require('body-parser');
 let cors = require('cors');
-require('dotenv').config()
-
+let socketIO = require('socket.io');
+let http = require('http');
 let Con = require('./db/connectToDB/connectToDB'); // retreive connected db
 
 app.use(cors());
@@ -16,6 +17,13 @@ app.use('/api/boidsServers', require('./routes/serverRoutes')); // setup boids s
 app.use('/api/memberships', require('./routes/memberShipRoutes')) // setup membership routes in the server
 app.use('/api/channels', require('./routes/channelRoutes')); // set up channels routes
 let PORT = process.env.PORT = 4404;
-
-app.listen(PORT, () => console.log('server runing on ' + PORT));
+let server = http.createServer(app);
+let io = socketIO(server);
+io.on('connection', socket => {
+    console.log(socket);
+    socket.on('disconnect', () => {
+        console.log(`Client disconnected ${socket.id}`)
+    })
+})
+server.listen(PORT, () => console.log('server runing on ' + PORT));
 
