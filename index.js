@@ -38,17 +38,16 @@ io.on('connection', socket => {
                             let { firstname, lastname, isHidden, post } = result[0];
 
                             socket.emit('sendPost', {
-                                results: {
-                                    newMessage: {
-                                        id: result.insertId,
-                                        firstname,
-                                        channel_id,
-                                        server_id,
-                                        lastname,
-                                        isHidden,
-                                        post
-                                    }
+                                newMessage: {
+                                    id: result.insertId,
+                                    firstname,
+                                    channel_id,
+                                    server_id,
+                                    lastname,
+                                    isHidden,
+                                    post
                                 }
+
                             })
                         })
                 })
