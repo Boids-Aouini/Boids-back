@@ -32,7 +32,7 @@ io.on('connection', socket => {
             Con.query('INSERT INTO Channels_Posts (user_id, channel_id, post, isHidden, createdAt) VALUES (?, ?, ?, ?, ?)', [user_id, channel_id, message, false, createdAt],
                 (err, result) => {
                     if (err) { throw err }
-                    Con.query('SELECT Users.firstname, Users.lastname, Channels_Posts.isHidden, Channels_Posts.post FROM Channels_Posts INNER JOIN Users ON Channels_Posts.id = (?)', [result.insertId],
+                    Con.query('SELECT Users.firstname, Users.lastname, Channels_Posts.isHidden, Channels_Posts.user_id, Channels_Posts.post FROM Channels_Posts INNER JOIN Users ON Channels_Posts.id = (?) AND Channels_Posts.user_id = Users.id', [result.insertId],
                         (err, result) => {
                             if (err) { throw err }
                             let { firstname, lastname, isHidden, post } = result[0];
