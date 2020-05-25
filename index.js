@@ -53,6 +53,12 @@ io.on('connection', socket => {
         }
 
     })
+    socket.on('deletePost', (msgData) => {
+        Con.query('DELETE FROM Channels_Posts WHERE id = (?)', [msgData.msg_id], (err, result) => {
+            if (err) throw err;
+            socket.emit('deletePost', msgData)
+        })
+    })
     socket.on('disconnect', () => {
         console.log(`Client disconnected ${socket.id}`)
     })
