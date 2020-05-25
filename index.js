@@ -35,10 +35,11 @@ io.on('connection', socket => {
                     Con.query('SELECT Users.firstname, Users.lastname, Channels_Posts.isHidden, Channels_Posts.user_id, Channels_Posts.post FROM Channels_Posts INNER JOIN Users ON Channels_Posts.id = (?) AND Channels_Posts.user_id = Users.id', [result.insertId],
                         (err, result) => {
                             if (err) { throw err }
-                            let { firstname, lastname, isHidden, post } = result[0];
+                            let { firstname, lastname, isHidden, post, user_id } = result[0];
 
                             socket.emit('sendPost', {
                                 id: result.insertId,
+                                user_id,
                                 firstname,
                                 channel_id,
                                 server_id,
