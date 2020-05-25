@@ -53,10 +53,10 @@ io.on('connection', socket => {
         }
 
     })
-    socket.on('deletePost', (msgData) => {
-        Con.query('DELETE FROM Channels_Posts WHERE id = (?)', [msgData.msg_id], (err, result) => {
+    socket.on('deletePost', (postData) => {
+        Con.query('DELETE FROM Channels_Posts WHERE id = (?)', [postData.post_id], (err, result) => {
             if (err) throw err;
-            socket.emit('deletePost', msgData)
+            socket.emit('deletePost', postData)
         })
     })
     socket.on('disconnect', () => {
