@@ -17,7 +17,7 @@ app.use('/api/boidsServers', require('./routes/serverRoutes')); // setup boids s
 app.use('/api/memberships', require('./routes/memberShipRoutes')) // setup membership routes in the server
 app.use('/api/channels', require('./routes/channelRoutes')); // set up channels routes
 let PORT = process.env.PORT = 4404;
-let server = http.createServer(app);
+let server = app.listen(PORT, () => console.log('server runing on ' + PORT));
 let io = socketIO(server);
 io.on('connection', socket => {
     console.log('New Client is connected', socket.id);
@@ -37,7 +37,7 @@ io.on('connection', socket => {
                             if (err) { throw err }
                             let { firstname, lastname, isHidden, post, user_id } = result[0];
 
-                            socket.emit('sendPost', {
+                            io.sockets.emit('sendPost', {
                                 id: result.insertId,
                                 user_id,
                                 firstname,
@@ -57,12 +57,11 @@ io.on('connection', socket => {
     socket.on('deletePost', (postData) => {
         Con.query('DELETE FROM Channels_Posts WHERE id = (?)', [postData.post_id], (err, result) => {
             if (err) throw err;
-            socket.emit('deletePost', postData)
+            io.sockets.emit('deletePost', postData)
         })
     })
     socket.on('disconnect', () => {
         console.log(`Client disconnected ${socket.id}`)
     })
 })
-server.listen(PORT, () => console.log('server runing on ' + PORT));
 
