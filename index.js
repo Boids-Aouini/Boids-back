@@ -63,7 +63,7 @@ io.on('connection', socket => {
     socket.on('updatePost', post => {
         Con.query('UPDATE Channels_Posts SET post = (?) WHERE id = (?)', [post.updatedPost, post.post_id], (err, result) => {
             if (err) throw err;
-            is.sockets.emit('updatePost', post)
+            io.sockets.emit('updatePost', post)
         })
     })
     socket.on('disconnect', () => {
