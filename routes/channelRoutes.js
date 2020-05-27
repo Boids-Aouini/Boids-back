@@ -37,14 +37,58 @@ router.get('/getChannels/:server_id', verify, async (req, res) => {
     Con.query('SELECT id, name FROM Channels WHERE server_id = (?)', [server_id], (err, channels) => {
         // retreive id and name from channels table where server_id equals to server_id that is retrieve from params
         if (err) { return res.status(400).send('There is a problem on retreiving channels from db').end() } // send error in case there is one
-        console.log(channels)
+
         res.status(200).send({ // send successful response if every thing went well
             results: {
                 response: 'Handeled get server\'s channels request',
-                channels
+                channels,
+                server_id
+
             }
         })
     })
+})
+
+router.post('/send', verify, async (req, res) => {
+    let user_id = req.user.id,
+        { channel_id, message, createdAt } = req.body;
+
+    Con.query('INSERT INTO Channels_Posts (user_id, channel_id, post, isHidden, createdAt) VALUES (?, ?, ?, ?, ?)', [user_id, channel_id, message, false, createdAt],
+        (err, result) => {
+            if (err) { return res.status(400).send({ message: 'there is a problem sending the message', error: err }).end() }
+            Con.query('SELECT Users.firstname, Users.lastname, Channels_Posts.isHidden, Channels_Posts.post FROM Channels_Posts INNER JOIN Users ON Channels_Posts.id = (?)', [result.insertId],
+                (err, result) => {
+                    if (err) { return res.status(400).send({ message: 'there is problem retreiving the inserted message', error: err }) }
+                    let { firstname, lastname, isHidden, post } = result[0];
+
+                    res.status(201).send({
+                        results: {
+                            newMessage: {
+                                id: result.insertId,
+                                firstname,
+                                lastname,
+                                isHidden,
+                                post
+                            }
+                        }
+                    })
+                })
+        })
+})
+
+router.get('/getPosts/:server_id/:channel_id', verify, async (req, res) => {
+    let { channel_id, server_id } = req.params;
+    Con.query('SELECT Channels_Posts.id, Channels_Posts.user_id, Channels_Posts.post, Channels_Posts.isHidden, Users.firstname, Users.lastname FROM Channels_Posts INNER JOIN Users ON Channels_Posts.channel_id = (?) AND Channels_Posts.user_id = Users.id', [channel_id],
+        (error, posts) => {
+            if (error) { return res.status(400).send({ message: 'there is a problem retreiving posts from db', error }) }
+            return res.status(200).send({
+                results: {
+
+                    response: 'Handeled get posts request',
+                    posts
+                }
+            })
+        })
 })
 
 
