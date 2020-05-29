@@ -50,7 +50,7 @@ router.get('/serversAsLeader', verify, async (req, res) => {
 router.get('/serversAsMember', verify, async (req, res) => {
     let userId = req.user.id;
 
-    Con.query('SELECT Servers.name, Servers.id FROM Servers INNER JOIN Servers_Memberships ON Servers_Memberships.user_id = (?) AND Servers.leader_id != (?)', [userId, userId],
+    Con.query('SELECT DISTINCT Servers.name, Servers.id FROM Servers INNER JOIN Servers_Memberships ON Servers_Memberships.user_id = (?) AND Servers.leader_id != (?)', [userId, userId],
         (err, result) => {
             if (err) { res.status(400).send(err).end() }
             res.status(200).send({
