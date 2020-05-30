@@ -1,5 +1,5 @@
 let request = require('supertest');
-let tokenTest = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjMsImlhdCI6MTU4ODkxODk2OX0.eGAe633XYdu3FrQQhAO_5P7UNWPfjQZ-t6vGqg3M_Pg';
+let tokenTest = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTkwODE0OTcxfQ.OSEPmqL_dQP2L005PiF6wl636IIoxhCS_lt4x9sCBRw';
 let server = 'http://localhost:4404';
 let Con = require('../db/connectToDB/connectToDB');
 
